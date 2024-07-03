@@ -1,77 +1,42 @@
 const express = require('express');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
+const register = require('./controllers/register');
+const signin = require('./controllers/signin');
+const id = require('./controllers/id');
+const image = require('./controllers/image');
+const saltRounds = 10;
+
+const knex = require('knex')
+
+const db = knex({
+    client: 'pg',
+    connection: {
+      host: '127.0.0.1',
+      port: 5432,
+      user: 'postgres',
+      password: 'aman',
+      database: 'face-detection-database',
+    },
+  });
+
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-const database  = {
-    users: [
-        {
-            id: '123',
-            name: 'Aman',
-            email: 'amansigroha4@gmail.com',
-            password: 'butterscotch',
-            entries: 0,
-            joined: new Date()
-        },
-        {
-            id: '124',
-            name: 'Naman',
-            email: 'Naman@gmail.com',
-            password: 'bananas',
-            entries: 0,
-            joined: new Date()
-        }
-    ]
-}
-
 app.get('/',(req, res)=>{
-    res.send(database.users);
+    res.send('success');
 })
 
-app.post('/signin', (req, res) => {
-    if(req.body.email === database.users[0].email &&
-        req.body.password === database.users[0].password){
-            res.json(database.users[0]);
-        }else {
-            res.status(400).json('error logging in');
-        }
-})
+app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt, saltRounds)});
 
-app.post('/register',(req,res)=>{
-    const {email, name, password} = req.body;
-    database.users.push({
-        id: '125',
-        name: name,
-        email: email,
-        entries: 0,
-        joined: new Date()
-    })
-    res.json(database.users[database.users.length - 1]);
-})
+app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt, saltRounds)});
 
-app.get('/profile/:id', (req,res)=>{
-    const { id } = req.params;
-    const user = database.users.find(user => user.id === id);
-    if (user) {
-        res.json(user);
-    }else{
-        res.status(400).json('no such user')
-    }
-})
+app.get('/profile/:id', (req, res) => { id.id(req, res, db)});
 
-app.put('/image',(req, res)=>{
-    const { id } = req.body;
-    const user = database.users.find(user => user.id === id);
-    if (user) {
-        user.entries++;
-        res.json(user.entries);
-    }else{
-        res.status(404).json('no such user')
-    }
-})
+app.put('/image',(req, res)=>{ image.image(req, res, db)});
 
 app.listen(3001, ()=>{
     console.log('app is running on port 3001')
