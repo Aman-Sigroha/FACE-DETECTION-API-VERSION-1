@@ -1,11 +1,13 @@
 const express = require('express');
 const cors = require('cors');
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const id = require('./controllers/id');
 const image = require('./controllers/image');
 const saltRounds = 10;
+const bcrypt = require('bcryptjs');
+
 
 const knex = require('knex')
 
