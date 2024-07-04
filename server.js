@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-//const bcrypt = require('bcrypt');
 const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const id = require('./controllers/id');
@@ -40,6 +39,8 @@ app.get('/profile/:id', (req, res) => { id.id(req, res, db)});
 
 app.put('/image',(req, res)=>{ image.image(req, res, db)});
 
-app.listen(process.env.PORT || 3001, ()=>{
-    console.log('app is running on port ${process.env.PORT}')
+const port = process.env.PORT || 4000;
+
+app.listen(port, ()=>{
+    console.log('app is running on port ${port}')
 })
