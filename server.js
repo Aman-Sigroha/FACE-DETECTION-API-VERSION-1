@@ -38,6 +38,6 @@ app.get('/profile/:id', (req, res) => { id.id(req, res, db)});
 
 app.put('/image',(req, res)=>{ image.image(req, res, db)});
 
-app.listen(process.env.PORT , ()=>{
-    console.log('app is running on port ${process.env.PORT}')
+app.listen(3001, ()=>{
+    console.log('app is running on port 3001')
 })
