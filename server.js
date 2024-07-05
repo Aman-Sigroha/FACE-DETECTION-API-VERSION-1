@@ -39,8 +39,8 @@ app.get('/profile/:id', (req, res) => { id.id(req, res, db)});
 
 app.put('/image',(req, res)=>{ image.image(req, res, db)});
 
-const port = process.env.PORT || 4000;
+const ports = process.env.PORT || 4000;
 
-app.listen(port, ()=>{
-    console.log('app is running on port ${port}')
+app.listen(ports, ()=>{
+    console.log('app is running on port ${ports}')
 })
