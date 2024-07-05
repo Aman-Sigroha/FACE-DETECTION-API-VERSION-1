@@ -13,7 +13,7 @@ const knex = require('knex')
 const db = knex({
     client: 'pg',
     connection: {
-      host: 'cq3b79bqf0us73deeoa0-a.oregon-postgres.render.com',
+      host: 'dpg-cq3b79bqf0us73deeoa0-a.oregon-postgres.render.com',
       port: 5432,
       user: 'face_detection_database_version_1_user',
       password: 'uc5abmKPV5xm7Z14j6fCYd1oyUy1qwFO',
