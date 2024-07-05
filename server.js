@@ -39,6 +39,17 @@ app.get('/profile/:id', (req, res) => { id.id(req, res, db)});
 
 app.put('/image',(req, res)=>{ image.image(req, res, db)});
 
+app.get('/db-test', async (req, res) => {
+  try {
+      const result = await db.raw('SELECT 1+1 AS result');
+      res.json({ success: true, result: result.rows[0].result });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+
 const ports = process.env.PORT || 4000;
 
 app.listen(ports, ()=>{
