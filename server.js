@@ -51,7 +51,7 @@ app.get('/db-test', async (req, res) => {
 });
 
 
-const ports = process.env.PORT || 4000;
+const ports = process.env.PORT || 4001;
 
 app.listen(ports, ()=>{
     console.log('app is running on port ${ports}')
