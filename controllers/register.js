@@ -1,10 +1,12 @@
 const handleRegister = (req, res, db, bcrypt, saltRounds) => {
     const { email, name, password } = req.body;
     if (!email || !name || !password) {
-        console.log('Incorrect form submission');
-        return res.status(400).json('incorrect form submission');
+        console.error('Incorrect form submission');
+        return res.status(400).json('Incorrect form submission');
     }
+
     const hash = bcrypt.hashSync(password, saltRounds);
+
     db.transaction(trx => {
         trx.insert({
             hash: hash,
@@ -25,11 +27,15 @@ const handleRegister = (req, res, db, bcrypt, saltRounds) => {
                 })
         })
         .then(trx.commit)
-        .catch(trx.rollback)
+        .catch(err => {
+            console.error('Error during registration:', err);
+            trx.rollback();
+            res.status(400).json('Unable to register');
+        });
     })
     .catch(err => {
         console.error('Error during registration:', err);
-        res.status(400).json('unable to register');
+        res.status(400).json('Unable to register');
     });
 };
 
