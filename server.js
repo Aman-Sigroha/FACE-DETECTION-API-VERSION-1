@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const register = require('./controllers/register');
@@ -51,7 +52,7 @@ app.get('/db-test', async (req, res) => {
 });
 
 
-const ports = process.env.PORT || 4001;
+const ports = process.env.PORT || 4000;
 
 app.listen(ports, ()=>{
     console.log('app is running on port ${ports}')
